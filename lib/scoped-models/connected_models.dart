@@ -42,6 +42,14 @@ mixin CastingsModel on ConnectedModel {
     });
   }
 
+  String convertDate(String date) {
+    if (date == null) {
+      return null;
+    }
+    
+    return date.split('-').reversed.join('-');
+  }
+
   Future<Null> fetchCastings() {
     _isLoading = true;
     notifyListeners();
@@ -61,11 +69,12 @@ mixin CastingsModel on ConnectedModel {
 
       castingListData.forEach((dynamic castingData) {
         final Casting casting = Casting(
-            id: castingData['_id'],
-            title: castingData['title'],
-            description: castingData['description'],
-            job: castingData['job'],
-            jobNumber: castingData['jobNumber']);
+          id: castingData['_id'],
+          title: castingData['title'],
+          description: castingData['description'],
+          datePublication: convertDate(castingData['datePublication']),
+          job: castingData['job'],
+        );
         fetchedCastingList.add(casting);
       });
 

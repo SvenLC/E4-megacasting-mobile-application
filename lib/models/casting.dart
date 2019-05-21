@@ -4,13 +4,13 @@ class Casting {
   final String id;
   final String title;
   final String description;
+  final String datePublication;
   final String job;
-  final int jobNumber;
 
   Casting(
       {@required this.id,
       @required this.title,
       @required this.description,
-      @required this.job,
-      @required this.jobNumber});
+      @required this.datePublication,
+      @required this.job});
 }
