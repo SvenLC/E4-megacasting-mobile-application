@@ -74,6 +74,7 @@ mixin CastingsModel on ConnectedModel {
           description: castingData['description'],
           datePublication: convertDate(castingData['datePublication']),
           job: castingData['job'],
+          contact: castingData['contact']
         );
         fetchedCastingList.add(casting);
       });

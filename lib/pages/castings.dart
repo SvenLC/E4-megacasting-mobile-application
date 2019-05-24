@@ -5,18 +5,18 @@ import 'package:scoped_model/scoped_model.dart';
 import '../scoped-models/main.dart';
 import '../widgets/castings/castings.dart';
 
-class OffersPage extends StatefulWidget {
+class CastingsPage extends StatefulWidget {
   final MainModel model;
 
-  OffersPage(this.model);
+  CastingsPage(this.model);
 
   @override
   State<StatefulWidget> createState() {
-    return _OffersPageState();
+    return _CastingsPageState();
   }
 }
 
-class _OffersPageState extends State<OffersPage> {
+class _CastingsPageState extends State<CastingsPage> {
   @override
   void initState() {
     super.initState();
@@ -68,11 +68,18 @@ class _OffersPageState extends State<OffersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+    
       drawer: _buildSideDrawer(context),
       appBar: AppBar(
         title: Text('MegaCasting'),
       ),
-      body: _buildCastingList(),
+      body:
+      GestureDetector(
+        onTap: () {
+
+        },
+        child: _buildCastingList(),
+      ) 
     );
   }
 }
