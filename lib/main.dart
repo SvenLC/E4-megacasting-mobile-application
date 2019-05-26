@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import './scoped-models/main.dart';
 import './models/casting.dart';
+import './models/article.dart';
 import './pages/castings.dart';
 import './pages/casting.dart';
+import './pages/articles.dart';
 import './pages/article.dart';
 
 void main() => runApp(MyApp());
@@ -48,8 +50,20 @@ class _MyAppState extends State<MyApp> {
               builder: (BuildContext context) => CastingPage(casting),
             );
           }
+           if (pathElements[1] == 'article') {
+            final String articleId = pathElements[2];
+            final Article article =
+                model.allArticles.firstWhere((Article article) {
+              return article.id == articleId;
+            });
+            model.selectArticle(articleId);
+            return MaterialPageRoute<bool>(
+              builder: (BuildContext context) => ArticlePage(article),
+            );
+          }
           return null;
         },
+        
         onUnknownRoute: (RouteSettings settings) {
           return MaterialPageRoute(
             builder: (BuildContext context) => CastingsPage(model),

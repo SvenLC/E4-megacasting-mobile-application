@@ -19,7 +19,7 @@ mixin CastingsModel on ConnectedModel {
     return List.from(_castings);
   }
 
-  List<Casting> get displayedProducts {
+  List<Casting> get displayedCastings {
     return List.from(_castings);
   }
 
@@ -33,7 +33,7 @@ mixin CastingsModel on ConnectedModel {
     return _selCastingId;
   }
 
-  Casting get selectedProduct {
+  Casting get selectedCasting {
     if (selectedCastingId == null) {
       return null;
     }
@@ -94,6 +94,80 @@ mixin CastingsModel on ConnectedModel {
 
   void selectCasting(String castingId) {
     _selCastingId = castingId;
+    notifyListeners();
+  }
+}
+
+mixin ArticlesModel on ConnectedModel {
+  List<Article> get allArticles {
+    return List.from(_articles);
+  }
+
+  List<Article> get displayedArticles {
+    return List.from(_articles);
+  }
+
+  int get selectedArticleIndex {
+    return _articles.indexWhere((Article article) {
+      return article.id == _selArticleId;
+    });
+  }
+
+  String get selectedArticleId {
+    return _selArticleId;
+  }
+
+  Article get selectedArticle {
+    if (selectedArticleId == null) {
+      return null;
+    }
+    return _articles.firstWhere((Article article) {
+      return article.id == _selArticleId;
+    });
+  }
+
+  Future<Null> fetchArticles() {
+    _isLoading = true;
+    notifyListeners();
+    return http
+        .get('https://megacastingapi.azurewebsites.net/articles')
+        .then<Null>((http.Response response) {
+      final List<Article> fetchedArticleList = [];
+      final List<dynamic> articleListData = json.decode(response.body);
+
+      print(response.body);
+      if (articleListData == null) {
+        _isLoading = false;
+        print('blop0');
+        notifyListeners();
+        return;
+      }
+
+      articleListData.forEach((dynamic articleData) {
+        final Article article = Article(
+          id: articleData['_id'],
+          title: articleData['title'],
+          content: articleData['content']
+          
+        );
+        fetchedArticleList.add(article);
+      });
+
+      _articles = fetchedArticleList;
+      print(_articles);
+      _isLoading = false;
+      notifyListeners();
+      _selCastingId = null;
+    }).catchError((error) {
+      print(error);
+      _isLoading = false;
+      notifyListeners();
+      return;
+    });
+  }
+
+  void selectArticle(String articleId) {
+    _selArticleId = articleId;
     notifyListeners();
   }
 }

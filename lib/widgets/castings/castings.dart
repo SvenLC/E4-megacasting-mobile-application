@@ -25,7 +25,7 @@ class Castings extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<MainModel>(
       builder: (BuildContext context, Widget child, MainModel model) {
-        return _buildCastingLists(model.displayedProducts);
+        return _buildCastingLists(model.displayedCastings);
       },
     );
   }

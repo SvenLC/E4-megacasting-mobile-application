@@ -3,24 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import '../scoped-models/main.dart';
-import '../widgets/castings/castings.dart';
+import '../widgets/articles/articles.dart';
 
-class CastingsPage extends StatefulWidget {
+class ArticlesPage extends StatefulWidget {
   final MainModel model;
 
-  CastingsPage(this.model);
+  ArticlesPage(this.model);
 
   @override
   State<StatefulWidget> createState() {
-    return _CastingsPageState();
+    return _ArticlesPage();
   }
 }
 
-class _CastingsPageState extends State<CastingsPage> {
+class _ArticlesPage extends State<ArticlesPage> {
   @override
   void initState() {
     super.initState();
-    widget.model.fetchCastings();
+    widget.model.fetchArticles();
   }
 
   Widget _buildSideDrawer(BuildContext context) {
@@ -50,13 +50,13 @@ class _CastingsPageState extends State<CastingsPage> {
     );
   }
 
-  Widget _buildCastingList() {
+ Widget _buildArticleList() {
     print('yop');
     return ScopedModelDescendant(
       builder: (BuildContext context, Widget child, MainModel model) {
-        Widget content = Center(child: Text('No Product Found !'));
-        if (model.displayedCastings.length > 0 && !model.isLoading) {
-          content = Castings();
+        Widget content = Center(child: Text('Aucun article trouvé'));
+        if (model.displayedArticles.length > 0 && !model.isLoading) {
+          content = Articles();
         } else if (model.isLoading) {
           content = Center(child: CircularProgressIndicator());
         }
@@ -78,7 +78,7 @@ class _CastingsPageState extends State<CastingsPage> {
         onTap: () {
 
         },
-        child: _buildCastingList(),
+        child: _buildArticleList(),
       ) 
     );
   }

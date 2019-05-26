@@ -1,58 +1,55 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
-import 'package:scoped_model/scoped_model.dart';
+import '../models/article.dart';
 
-import '../scoped-models/main.dart';
+class ArticlePage extends StatelessWidget {
+  final Article article;
 
-class ArticlesPage extends StatefulWidget {
-  final MainModel model;
-
-  ArticlesPage(this.model);
-
-  @override
-  State<StatefulWidget> createState() {
-    return _ArticlesPage();
-  }
-}
-
-class _ArticlesPage extends State<ArticlesPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  Widget _buildSideDrawer(BuildContext context) {
-    return Drawer(
-      child: Column(
-        children: <Widget>[
-          AppBar(
-            automaticallyImplyLeading: false,
-            title: Text('Menu'),
-          ),
-          ListTile(
-            leading: Icon(Icons.account_box),
-            title: Text('Offres de castings'),
-            onTap: () {
-              Navigator.pushReplacementNamed(context, '/offers');
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.edit),
-            title: Text('Articles'),
-            onTap: () {
-              Navigator.pushReplacementNamed(context, '/articles');
-            },
-          ),
-        ],
-      ),
-    );
-  }
+  ArticlePage(this.article);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: _buildSideDrawer(context),
-      appBar: AppBar(title: Text('MegaCasting')),
+    print('hey');
+    return WillPopScope(
+      onWillPop: () {
+        print('Back button pressed');
+        Navigator.pop(context, false);
+        return Future.value(false);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Articles'),
+        ),
+        body: ListView(
+          children: <Widget>[
+            Container(
+              alignment: Alignment.topLeft,
+              padding: EdgeInsets.only(top: 10.0, left: 8.0),
+              child: Text(
+                article.title,
+                textAlign: TextAlign.left,
+                textScaleFactor: 1.4,
+                style: TextStyle(fontWeight: FontWeight.w700),
+              ),
+            ),
+            Container(
+              alignment: Alignment.topLeft,
+              padding: EdgeInsets.only(top: 10.0, left: 8.0),
+              child: Text(
+                article.content,
+                textAlign: TextAlign.left,
+                textScaleFactor: 1.1,
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: 10.0),
+              margin: EdgeInsets.only(bottom: 25.0),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
